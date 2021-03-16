@@ -15,6 +15,7 @@ class HomePage extends Component {
       fetchingPassengers: false,
       passengersFetched: false,
       passengers: [],
+      finished: false,
     };
     this.passengerCardsContainerRef = React.createRef();
   }
@@ -47,6 +48,7 @@ class HomePage extends Component {
             fetchingPassengers: false,
             passengersFetched: false,
             passengers: passengers,
+            finished: true,
           });
         }
       },
@@ -70,7 +72,7 @@ class HomePage extends Component {
   }
 
   renderPassengers(passengers) {
-    const { fetchingPassengers, page, pageSize } = this.state;
+    const { fetchingPassengers, finished, page, pageSize } = this.state;
 
     return (
       <Paper
@@ -97,13 +99,17 @@ class HomePage extends Component {
         ) : (
           ""
         )}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => this.fetchPassengers(page + 1, pageSize)}
-        >
-          Load More
-        </Button>
+        {!finished ? (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => this.fetchPassengers(page + 1, pageSize)}
+          >
+            Load More
+          </Button>
+        ) : (
+          ""
+        )}
       </Paper>
     );
   }
